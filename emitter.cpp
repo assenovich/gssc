@@ -8,4 +8,4 @@ Emitter::Emitter(QObject* parent)
 
 Emitter::~Emitter() = default;
 
-}
+} // namespace gssc

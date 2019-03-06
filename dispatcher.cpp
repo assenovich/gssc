@@ -1,7 +1,7 @@
 #include "dispatcher.h"
 
+#include <stdexcept>
 #include "emitter.h"
-#include <QDebug>
 
 namespace gssc {
 
@@ -11,19 +11,24 @@ Dispatcher::Dispatcher(QObject* parent)
 
 Dispatcher::~Dispatcher() = default;
 
-void Dispatcher::generic_slot_impl(QString name, QVariantList data)
+void Dispatcher::on_notify_impl(QString name, QVariantList data)
 {
-  qDebug() << name << data;
+  const auto it = _handlers.find(name);
+  if (it == _handlers.end()) {
+    throw std::logic_error{ QString("Handler for event \"%1\" was not found")
+      .arg(name).toStdString() };
+  }
+  (*it)->process(std::move(data));
 }
 
 QMetaObject::Connection
 connect(Emitter* emitter, Dispatcher* dispatcher, Qt::ConnectionType type)
 {
   return QObject::connect(
-    emitter, SIGNAL(generic_signal_impl(QString, QVariantList)),
-    dispatcher, SLOT(generic_slot_impl(QString, QVariantList)),
+    emitter, SIGNAL(notify_impl(QString, QVariantList)),
+    dispatcher, SLOT(on_notify_impl(QString, QVariantList)),
     type
   );
 }
 
-}
+} // namespace gssc
