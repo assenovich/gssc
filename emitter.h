@@ -29,7 +29,6 @@ class Emitter
   : public QObject
 {
   Q_OBJECT
-  friend QMetaObject::Connection connect(Emitter*, Dispatcher*, Qt::ConnectionType);
 
 signals:
   void notify_impl(QString name, QVariantList data);

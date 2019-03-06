@@ -25,8 +25,8 @@ QMetaObject::Connection
 connect(Emitter* emitter, Dispatcher* dispatcher, Qt::ConnectionType type)
 {
   return QObject::connect(
-    emitter, SIGNAL(notify_impl(QString, QVariantList)),
-    dispatcher, SLOT(on_notify_impl(QString, QVariantList)),
+    emitter, &Emitter::notify_impl,
+    dispatcher, &Dispatcher::on_notify_impl,
     type
   );
 }
