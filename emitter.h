@@ -6,8 +6,6 @@
 
 namespace gssc {
 
-class Dispatcher;
-
 namespace impl {
 
 template <typename Result>

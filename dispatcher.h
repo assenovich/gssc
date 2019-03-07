@@ -49,7 +49,7 @@ struct HandlerCaller<Handler, PackedArgs<Deserialized...>, PackedArgs<>>
     if (!serialized.empty()) {
       throw std::logic_error{ "too many serialized arguments, expected less" };
     }
-    handler(std::forward<Deserialized>(deserialized)...);
+    handler(std::move(deserialized)...);
   }
 };
 
