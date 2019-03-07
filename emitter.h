@@ -17,7 +17,7 @@ void serialize_to_qvariantlist(Result& result)
 template <typename Result, typename First, typename... Rest>
 void serialize_to_qvariantlist(Result& result, First&& first, Rest&&... rest)
 {
-  result << QVariant{ std::forward<First>(first) };
+  result << std::forward<First>(first);
   serialize_to_qvariantlist(result, std::forward<Rest>(rest)...);
 }
 
